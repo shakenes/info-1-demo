@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-n = 500000
+n = 50000
 
 points = np.random.uniform(0, 1, (2, n))
 
