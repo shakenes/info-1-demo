@@ -2,6 +2,23 @@ from Car import Car, NoDriverException, TooManyPassengersException
 import pytest
 
 
+def test_constructor():
+    # these constructor calls should not work and we expect a ValueError
+    with pytest.raises(ValueError):
+        c = Car(-1)
+    with pytest.raises(ValueError):
+        c = Car(0)
+    with pytest.raises(ValueError):
+        c = Car(1.5)
+    with pytest.raises(ValueError):
+        c = Car("5")
+
+    # This one should work
+    c = Car(2)
+    # check type of object
+    assert isinstance(c, Car)
+
+
 def test_add_passenger():
     c = Car(4)
     assert c.get_passengers() == []
@@ -16,6 +33,20 @@ def test_add_passenger():
         # Now there are more passengers than seats, so we expect an exception
         c.add_passenger("Alice4")
     assert len(c.get_passengers()) == 4
+
+    # now lets tests invalid passenger names
+    with pytest.raises(ValueError):
+        c.add_passenger(0)
+
+    with pytest.raises(ValueError):
+        c.add_passenger({"Test": 1})
+
+    with pytest.raises(ValueError):
+        c.add_passenger(["Hugo"])
+
+    # now lets test something stupid
+    with pytest.raises(ValueError):
+        c.add_passenger(Exception)
 
 
 def test_accelerate():

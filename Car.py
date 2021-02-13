@@ -9,11 +9,15 @@ class TooManyPassengersException(Exception):
 
 class Car:
     def __init__(self, n_seats):
+        if not isinstance(n_seats, int) or n_seats <= 0:
+            raise ValueError("Number of seats must be nonzero positive integer")
         self.passengers = []
         self.speed = 0
         self.n_seats = n_seats
 
     def add_passenger(self, name):
+        if not isinstance(name, str):
+            raise ValueError("Passenger name must be a string")
         if len(self.passengers) == self.n_seats:
             raise TooManyPassengersException("Too many passengers for too few seats")
         self.passengers.append(name)
